@@ -1,9 +1,10 @@
 import sys
 from argparse import ArgumentParser
 
-from .core import parser_loader
-from .core import ForecastType
-from .core import Unit
+from weatherterm.core import parser_loader
+from weatherterm.core import ForecastType
+from weatherterm.core import Unit
+from weatherterm.core import SetUnitAction
 
 def _validate_forecast_args(args):
 	if args.forecast_option is None:
@@ -15,8 +16,8 @@ def _validate_forecast_args(args):
 		printf(
 			f'{argparse.prog}:error: {err_msg}',
 			file=sys.stderr,
-			sys.exit()
 		)
+		sys.exit()
 
 parsers = parser_loader.load('./weatherterm/parsers')
 
@@ -30,19 +31,20 @@ required = argparse.add_argument_group('required arguments')
 required.add_argument(
 	'-p', 
 	'--parser',
-	choises=parsers.keys(),
+	choices=parsers.keys(),
 	required=True,
 	dest='parser',
 	help='Specify which parse is going to be used to scrape weather information.'
 )
 
-unit_values = [name.title() for name, value in Unit._members__.items()]
+unit_values = [name.title() for name, value in Unit.__members__.items()]
 
 argparse.add_argument(
 	'-u',
 	'--unit',
-	choises=unit_valuses,
+	choices=unit_values,
 	required=False,
+	action=SetUnitAction,
 	dest='unit',
 	help='Specify the unit that will be used to display the temperatues.'
 )
