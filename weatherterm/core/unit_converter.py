@@ -26,10 +26,10 @@ class UnitConverter:
 			return 0
 
 		if (self.dest_unit == self._parser_default_unit or self.dest_unit is None):
-			return self._format_results(tempearature)
+			return self._format_results(temperature)
 
 		func = self._convert_functions[self.dest_unit]
-		result = func(tempearature)
+		result = func(temperature)
 
 	def _format_results(self, value):
 		return int(value) if value.is_integer() else f'{value:.1f}'

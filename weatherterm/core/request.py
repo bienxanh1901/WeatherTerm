@@ -13,7 +13,7 @@ class Request:
 		self._driver = webdriver.PhantomJS(self._phantomjs_path)
 
 	def fetch_data(self, forecast, area):
-		url = sefl.base_url.format(forecast=forecast, area=area)
+		url = self._base_url.format(forecast=forecast, area=area)
 		self._driver.get(url)
 
 		if self._driver.title == '404 Not Found':
